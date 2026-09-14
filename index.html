@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iwak Paus | Seafood Modern</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f8ff;
+            color: #123;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #0066cc;
+            padding: 15px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,.15);
+        }
+
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #8ed8ff;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        .cart-btn {
+            background: white;
+            color: #0066cc;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 500px;
+            padding: 70px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #0066cc, #00a8e8);
+            color: white;
+        }
+
+        .hero-text {
+            max-width: 550px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 25px;
+            background: white;
+            color: #0066cc;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero-img {
+            font-size: 150px;
+        }
+
+        /* SECTION */
+        .section {
+            padding: 60px 7%;
+        }
+
+        .title {
+            text-align: center;
+            color: #0066cc;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #667;
+        }
+
+        /* MENU */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,.1);
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 18px;
+        }
+
+        .card h3 {
+            color: #0066cc;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+            min-height: 40px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0087d5;
+            margin: 12px 0;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 10px;
+            background: #0066cc;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #004c99;
+        }
+
+        /* ABOUT */
+        .about {
+            background: white;
+            text-align: center;
+            padding: 60px 10%;
+        }
+
+        .about p {
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* CART */
+        .cart {
+            position: fixed;
+            right: -420px;
+            top: 0;
+            width: 380px;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            padding: 25px;
+            box-shadow: -5px 0 20px rgba(0,0,0,.2);
+            transition: .4s;
+            overflow-y: auto;
+        }
+
+        .cart.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            border: none;
+            background: #eee;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .cart-item h4 {
+            color: #0066cc;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .quantity button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #0066cc;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #0066cc;
+        }
+
+        /* CHECKOUT */
+        .checkout input,
+        .checkout textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ccd;
+            border-radius: 8px;
+        }
+
+        .checkout textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        .checkout button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: #08a64f;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* CONTACT */
+        .contact {
+            background: #0066cc;
+            color: white;
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        .contact h2 {
+            margin-bottom: 12px;
+        }
+
+        .wa {
+            display: inline-block;
+            margin-top: 15px;
+            background: #08a64f;
+            color: white;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #003d7a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* MOBILE */
+        @media(max-width: 700px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-img {
+                font-size: 100px;
+            }
+
+            nav a {
+                display: none;
+            }
+
+            .cart {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">Iwak<span>Paus</span></div>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">Tentang</a>
+        <a href="#contact">Kontak</a>
+        <button class="cart-btn" onclick="openCart()">
+            🛒 Keranjang (<span id="cartCount">0</span>)
+        </button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-text">
+        <h1>Iwak Paus</h1>
+
+        <p>
+            Nikmati berbagai pilihan produk Iwak Paus
+            dengan cita rasa khas, kemasan modern,
+            dan harga yang bersahabat.
+        </p>
+
+        <a href="#menu" class="btn">
+            Lihat Menu
+        </a>
+    </div>
+
+    <div class="hero-img">
+        🐟
+    </div>
+
+</section>
+
+
+<!-- MENU -->
+<section class="section" id="menu">
+
+    <h2 class="title">Menu Favorit</h2>
+
+    <p class="subtitle">
+        Pilih produk favoritmu dan masukkan ke keranjang
+    </p>
+
+    <div class="menu-grid">
+
+        <!-- PRODUK 1 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Original</h3>
+                <p>Menu original dengan cita rasa khas.</p>
+
+                <div class="price">Rp15.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Original',15000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 2 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Pedas</h3>
+                <p>Varian pedas untuk pecinta rasa kuat.</p>
+
+                <div class="price">Rp17.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Pedas',17000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 3 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Keju</h3>
+                <p>Perpaduan rasa gurih dan creamy.</p>
+
+                <div class="price">Rp18.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Keju',18000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 4 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket BBQ</h3>
+                <p>Rasa BBQ yang cocok untuk teman santai.</p>
+
+                <div class="price">Rp18.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket BBQ',18000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 5 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Sambal</h3>
+                <p>Dilengkapi sambal dengan rasa khas.</p>
+
+                <div class="price">Rp16.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Sambal',16000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 6 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Komplit</h3>
+                <p>Paket lengkap untuk makan bersama.</p>
+
+                <div class="price">Rp25.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Komplit',25000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 7 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Hemat</h3>
+                <p>Pilihan hemat dengan rasa tetap nikmat.</p>
+
+                <div class="price">Rp20.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Hemat',20000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+
+        <!-- PRODUK 8 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80">
+
+            <div class="card-content">
+                <h3>Paket Jumbo</h3>
+                <p>Porsi lebih banyak untuk dinikmati bersama.</p>
+
+                <div class="price">Rp30.000</div>
+
+                <button class="add-btn"
+                    onclick="addToCart('Paket Jumbo',30000)">
+                    + Keranjang
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+    <h2 class="title">Tentang Iwak Paus</h2>
+
+    <p>
+        Iwak Paus hadir dengan konsep produk yang modern,
+        praktis, dan cocok dinikmati bersama teman maupun keluarga.
+        Kami menyediakan berbagai pilihan menu dengan harga
+        yang terjangkau dan pelayanan yang mudah melalui WhatsApp.
+    </p>
+
+</section>
+
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+
+    <h2>Pesan Sekarang!</h2>
+
+    <p>
+        Untuk informasi dan pemesanan langsung,
+        hubungi WhatsApp kami.
+    </p>
+
+    <!-- GANTI NOMOR INI -->
+    <a class="wa"
+       href="https://wa.me/6281234567890"
+       target="_blank">
+       💬 WhatsApp
+    </a>
+
+</section>
+
+
+<footer>
+    © 2026 Iwak Paus • All Rights Reserved
+</footer>
+
+
+<!-- CART -->
+<div class="cart" id="cart">
+
+    <div class="cart-header">
+        <h2>🛒 Keranjang</h2>
+
+        <button class="close" onclick="closeCart()">
+            ✕
+        </button>
+    </div>
+
+    <div id="cartItems">
+        <p>Keranjang masih kosong.</p>
+    </div>
+
+    <div class="total">
+        Total:
+        <span id="totalPrice">Rp0</span>
+    </div>
+
+
+    <!-- CHECKOUT -->
+    <div class="checkout">
+
+        <h3 style="margin-bottom:15px;">
+            Data Pemesan
+        </h3>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Nama lengkap">
+
+        <input
+            type="text"
+            id="customerAddress"
+            placeholder="Alamat">
+
+        <textarea
+            id="customerNote"
+            placeholder="Catatan pesanan"></textarea>
+
+        <button onclick="checkoutWhatsApp()">
+            📲 Checkout via WhatsApp
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let cart = [];
+
+
+    // TAMBAH PRODUK
+    function addToCart(name, price) {
+
+        let existing = cart.find(
+            item => item.name === name
+        );
+
+        if (existing) {
+            existing.qty++;
+        } else {
+            cart.push({
+                name: name,
+                price: price,
+                qty: 1
+            });
+        }
+
+        updateCart();
+
+        openCart();
+    }
+
+
+    // UPDATE CART
+    function updateCart() {
+
+        let cartItems =
+            document.getElementById("cartItems");
+
+        let cartCount =
+            document.getElementById("cartCount");
+
+        let totalPrice =
+            document.getElementById("totalPrice");
+
+
+        cartItems.innerHTML = "";
+
+        let total = 0;
+        let count = 0;
+
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML =
+                "<p>Keranjang masih kosong.</p>";
+
+        }
+
+
+        cart.forEach((item, index) => {
+
+            total += item.price * item.qty;
+            count += item.qty;
+
+
+            cartItems.innerHTML += `
+
+                <div class="cart-item">
+
+                    <h4>${item.name}</h4>
+
+                    <p>
+                        Rp${item.price.toLocaleString("id-ID")}
+                    </p>
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="changeQty(${index},-1)">
+                            -
+                        </button>
+
+                        <strong>
+                            ${item.qty}
+                        </strong>
+
+                        <button
+                            onclick="changeQty(${index},1)">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+
+        cartCount.innerText = count;
+
+        totalPrice.innerText =
+            "Rp" + total.toLocaleString("id-ID");
+    }
+
+
+    // UBAH JUMLAH
+    function changeQty(index, amount) {
+
+        cart[index].qty += amount;
+
+        if (cart[index].qty <= 0) {
+
+            cart.splice(index, 1);
+
+        }
+
+        updateCart();
+    }
+
+
+    // BUKA CART
+    function openCart() {
+
+        document
+            .getElementById("cart")
+            .classList.add("active");
+
+    }
+
+
+    // TUTUP CART
+    function closeCart() {
+
+        document
+            .getElementById("cart")
+            .classList.remove("active");
+
+    }
+
+
+    // CHECKOUT WHATSAPP
+    function checkoutWhatsApp() {
+
+        if (cart.length === 0) {
+
+            alert(
+                "Keranjang masih kosong!"
+            );
+
+            return;
+        }
+
+
+        let name =
+            document.getElementById(
+                "customerName"
+            ).value;
+
+        let address =
+            document.getElementById(
+                "customerAddress"
+            ).value;
+
+        let note =
+            document.getElementById(
+                "customerNote"
+            ).value;
+
+
+        if (!name || !address) {
+
+            alert(
+                "Silakan isi nama dan alamat terlebih dahulu."
+            );
+
+            return;
+        }
+
+
+        let message =
+            "Halo Iwak Paus! Saya ingin memesan:%0A%0A";
+
+
+        let total = 0;
+
+
+        cart.forEach(item => {
+
+            let subtotal =
+                item.price * item.qty;
+
+            total += subtotal;
+
+
+            message +=
+                "• " +
+                item.name +
+                " x" +
+                item.qty +
+                " = Rp" +
+                subtotal.toLocaleString("id-ID") +
+                "%0A";
+
+        });
+
+
+        message +=
+            "%0A*Total: Rp" +
+            total.toLocaleString("id-ID") +
+            "*";
+
+
+        message +=
+            "%0A%0ANama: " +
+            encodeURIComponent(name);
+
+        message +=
+            "%0AAlamat: " +
+            encodeURIComponent(address);
+
+        message +=
+            "%0ACatatan: " +
+            encodeURIComponent(note || "-");
+
+
+        // GANTI NOMOR WHATSAPP
+        let phone =
+            "6281234567890";
+
+
+        let url =
+            "https://wa.me/" +
+            phone +
+            "?text=" +
+            message;
+
+
+        window.open(url, "_blank");
+
+    }
+
+</script>
+
+</body>
+  </html>
